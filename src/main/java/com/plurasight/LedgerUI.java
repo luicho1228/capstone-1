@@ -12,10 +12,10 @@ public class LedgerUI {
     private String productDetailsTitle;
 
     public LedgerUI(){
-        homeScreenInit();
+        //homeScreenInit();
     }
 
-    private void homeScreenInit(){
+    public void homeScreenInit(){
         displayTitle("MAIN MENU");
         String[] mainMenuOptions = {"Add Deposit", "Make Payment", "Ledger", "Exit"};
         showMenuOptions(mainMenuOptions);
@@ -25,6 +25,10 @@ public class LedgerUI {
         displayTitle("ADD DEPOSIT");
 //        String[] addDepositOptions = {};
 //        showMenuOptions(addDepositOptions);
+
+    }
+    public void addPaymentUiInit(){
+        displayTitle("ADD PAYMENT");
 
     }
 
@@ -40,7 +44,7 @@ public class LedgerUI {
 //        System.out.println();
 //    }
 
-    public void PromptUser(String prompt){
+    public void promptUser(String prompt){
         displayDivider(50);
         System.out.print("Enter " + prompt + ":");
 

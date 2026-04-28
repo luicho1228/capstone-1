@@ -14,13 +14,14 @@ import java.util.Scanner;
 public class AccountLedgerApp {
 
     private static Transaction transaction;
-    private static ArrayList<Transaction>transactionList = new ArrayList<>();
     private static LedgerUI ui;
     private static Ledger ledger;
     private static Scanner scanner = new Scanner(System.in);
     private static int intUserInput;
+    private static LocalDate date;
+    private static LocalTime time;
+
     public static void main(String[] args){
-        readFile("transaction_sorted.csv");
         ui= new LedgerUI();
         ledger = new Ledger();
         mainMenu();
@@ -29,6 +30,7 @@ public class AccountLedgerApp {
     private static void mainMenu(){
         boolean isRunning = true;
         do {
+            ui.homeScreenInit();
             intUserInput = getIntUserInput();
             switch (intUserInput) {
                 case 1:
@@ -54,14 +56,25 @@ public class AccountLedgerApp {
 
     public static void addDeposit(){
         ui.addDepositUiInit();
+        ui.promptUser("deposit amount");
+        double depositAmount = scanner.nextDouble();
+        scanner.nextLine();
+        ui.promptUser("vendor ");
+        String vendor = scanner.nextLine();
+        ui.promptUser("description");
+        String description = scanner.nextLine();
+        date = LocalDate.now();
+        time = LocalTime.now();
+        transaction = new Transaction(date,time,description,vendor,depositAmount);
+        ledger.addDeposit(transaction);
+    }
+    private static void addPayment(){
+
     }
 
     public static int getIntUserInput(){
         int intUserInput = scanner.nextInt();
         scanner.nextLine();
         return intUserInput;
-    }
-    public static void readFile(String file){
-
     }
 }

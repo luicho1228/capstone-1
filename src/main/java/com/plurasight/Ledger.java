@@ -48,7 +48,7 @@ public class Ledger {
         Collections.reverse(ledgerArrayList);
     }
 
-    public void addTransaction(Transaction newTransaction){
+    private void addTransaction(Transaction newTransaction){
         ledgerArrayList.add(newTransaction);
         dateTransactionHashMap.put(newTransaction.getDate(),newTransaction);
         timeTransactionHashMap.put(newTransaction.getTime(),newTransaction);
