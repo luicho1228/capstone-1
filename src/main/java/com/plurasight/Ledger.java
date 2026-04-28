@@ -9,15 +9,19 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Ledger {
-    ArrayList<Transaction> ledgerArrayList;
-    HashMap<LocalDate, Transaction> dateTransactionHashMap;
-    HashMap<LocalTime, Transaction> timeTransactionHashMap;
-    HashMap<String, Transaction> vendorTransactionHashMap;
-    HashMap<Double,Transaction> amountTransactionHashMap;
+    private ArrayList<Transaction> ledgerArrayList;
+    private ArrayList<Transaction> depositsArrayList;
+    private ArrayList<Transaction> paymentArrayList;
+    private HashMap<LocalDate, Transaction> dateTransactionHashMap;
+    private HashMap<LocalTime, Transaction> timeTransactionHashMap;
+    private HashMap<String, Transaction> vendorTransactionHashMap;
+    private HashMap<Double,Transaction> amountTransactionHashMap;
     private double totalAmount;
 
     public Ledger(){
         ledgerArrayList = new ArrayList<>();
+        depositsArrayList = new ArrayList<>();
+        paymentArrayList = new ArrayList<>();
         dateTransactionHashMap = new HashMap<>();
         timeTransactionHashMap = new HashMap<>();
         vendorTransactionHashMap = new HashMap<>();
@@ -30,8 +34,19 @@ public class Ledger {
         return totalAmount;
     }
 
+    public ArrayList<Transaction> getLedgerArrayList(){
+        return ledgerArrayList;
+    }
+
+    public ArrayList<Transaction> getDepositsArrayList(){
+        return depositsArrayList;
+    }
+    public ArrayList<Transaction> getPaymentArrayList(){
+        return paymentArrayList;
+    }
     public void addDeposit(Transaction transaction){
         totalAmount += transaction.getAmount();
+        depositsArrayList.add(transaction);
         addTransaction(transaction);
     }
 
@@ -40,6 +55,7 @@ public class Ledger {
         paymentAmount = -paymentAmount;
         transaction.setAmount(paymentAmount);
         totalAmount += paymentAmount;
+        paymentArrayList.add(transaction);
         addTransaction(transaction);
     }
 
@@ -94,6 +110,11 @@ public class Ledger {
                     String vendor = fileParts[3];
                     double amount = Double.parseDouble(fileParts[4]);
                     Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                    if (transaction.getAmount() > 0){
+                        depositsArrayList.add(transaction);
+                    } else if (transaction.getAmount() < 0) {
+                        paymentArrayList.add(transaction);
+                    }
                     this.addTransaction(transaction);
                     //System.out.println("date: " + date + "time: " + time + "description: " + description + "vendor: " + vendor + "amount: " + amount);
                 }count++;

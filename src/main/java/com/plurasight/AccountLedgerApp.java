@@ -66,10 +66,14 @@ public class AccountLedgerApp {
         String vendor = scanner.nextLine();
         ui.promptUser("description");
         String description = scanner.nextLine();
-        date = LocalDate.now();
-        time = LocalTime.now();
-        transaction = new Transaction(date,time,description,vendor,depositAmount);
-        ledger.addDeposit(transaction);
+        confirmTransaction();
+        if(intUserInput == 1) {
+            date = LocalDate.now();
+            time = LocalTime.now();
+            transaction = new Transaction(date, time, description, vendor, depositAmount);
+            transaction.setType("deposit");
+            ledger.addDeposit(transaction);
+        }
     }
     private static void addPayment(){
         ui.displayTitle("ADD PAYMENT");
@@ -85,15 +89,50 @@ public class AccountLedgerApp {
             date = LocalDate.now();
             time = LocalTime.now();
             transaction = new Transaction(date, time, description, vendor, depositAmount);
+            transaction.setType("payment");
             ledger.addPayment(transaction);
         }
     }
 
+
     public static void showLedger(){
-        ui.displayTitle("LEDGER");
-        ui.displayProductsInArray(ledger.ledgerArrayList);
+        boolean isShowingList = true;
+        displayTransactionList(ledger.getLedgerArrayList());
+        do {
+
+            intUserInput = getIntUserInput();
+            if (intUserInput == 1) {
+                //show all
+                displayTransactionList(ledger.getLedgerArrayList());
+            } else if (intUserInput == 2) {
+                //show deposits
+                displayTransactionList(ledger.getDepositsArrayList());
+
+            } else if (intUserInput == 3) {
+                //show payments
+                displayTransactionList(ledger.getPaymentArrayList());
+            } else if (intUserInput == 4) {
+                //show reports
+            } else if (intUserInput == 5) {
+                //back to main menu
+                isShowingList = false;
+            }
+        }while (isShowingList);
+
+
     }
 
+    public void showReports(){
+
+    }
+
+    public static void displayTransactionList(ArrayList<Transaction> transactions){
+        ui.displayTitle("LEDGER");
+        ui.displayProductsInArray(transactions);
+        String[] ledgerOptions = {"Show All", "Show Deposits", "Show Payments","Show Reports","Home"};
+        ui.displayTitle("FILTER SEARCH AND REPORTS");
+        ui.showMenuOptions(ledgerOptions);
+    }
 
     public static void confirmTransaction(){
         ui.confirmTransaction();

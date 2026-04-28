@@ -11,6 +11,7 @@ public class Transaction {
     private String vendor;
     private double amount;
     private DateTimeFormatter formatter;
+    private   String transactionType;
 
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
@@ -19,6 +20,14 @@ public class Transaction {
         this.vendor = vendor;
         this.amount = amount;
         formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    }
+
+    public void setType(String transactionType){
+        this.transactionType = transactionType;
+    }
+
+    public String getTransactionType(){
+        return transactionType;
     }
 
     public LocalDate getDate() {
@@ -61,7 +70,7 @@ public class Transaction {
         this.amount = amount;
     }
     public String toString(){
-        String transactionString = String.format("%s | %s | %s | %s | %.2f \n" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+        String transactionString = String.format("%s | %s | %s | %s | %.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
         return transactionString;
     }
 }
