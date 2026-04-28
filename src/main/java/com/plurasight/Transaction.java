@@ -57,4 +57,8 @@ public class Transaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+    public String toString(){
+        String transactionString = String.format("%s \\| %s \\| %s \\| %s \\| %.2d" , getDate().toString(),getTime().toString(),getDescription(),getVendor(),getAmount());
+        return transactionString;
+    }
 }

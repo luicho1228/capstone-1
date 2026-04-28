@@ -21,6 +21,13 @@ public class LedgerUI {
         showMenuOptions(mainMenuOptions);
 
     }
+    public void addDepositUiInit(){
+        displayTitle("ADD DEPOSIT");
+//        String[] addDepositOptions = {};
+//        showMenuOptions(addDepositOptions);
+
+    }
+
 
 
 //    public void displayProductDetails(){
@@ -33,13 +40,19 @@ public class LedgerUI {
 //        System.out.println();
 //    }
 
-    public void displayProduct(Object object){
-        System.out.println("\t" +"* "+ resetTextColor + object + blueTextColor);
+    public void PromptUser(String prompt){
+        displayDivider(50);
+        System.out.print("Enter " + prompt + ":");
+
     }
 
-    public void displayProductsInArray(ArrayList<Object> objects){
-            for (Object object : objects) {
-               displayProduct(object);
+    public void displayProduct(Transaction transaction){
+        System.out.println("\t" +"* "+ resetTextColor + transaction + blueTextColor);
+    }
+
+    public void displayProductsInArray(ArrayList<Transaction> transactions){
+            for (Transaction transaction : transactions) {
+               displayProduct(transaction);
             }
     }
 

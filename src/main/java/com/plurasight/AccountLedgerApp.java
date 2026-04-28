@@ -9,40 +9,59 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.Scanner;
 
 public class AccountLedgerApp {
 
     private static Transaction transaction;
     private static ArrayList<Transaction>transactionList = new ArrayList<>();
     private static LedgerUI ui;
+    private static Ledger ledger;
+    private static Scanner scanner = new Scanner(System.in);
+    private static int intUserInput;
     public static void main(String[] args){
         readFile("transaction_sorted.csv");
         ui= new LedgerUI();
+        ledger = new Ledger();
+        mainMenu();
     }
 
-    public static void readFile(String file){
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String fileInput ="";
-            int count = 0;
-            while ((fileInput = bufferedReader.readLine()) != null){
-                if(count > 0) {
-                    String[] fileParts = fileInput.split("\\|");
-                   // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-                    LocalDate date = LocalDate.parse(fileParts[0]);
-                    //formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    LocalTime time = LocalTime.parse(fileParts[1]);
-                    String description = fileParts[2];
-                    String vendor = fileParts[3];
-                    double amount = Double.parseDouble(fileParts[4]);
-                    transaction = new Transaction(date, time, description, vendor, amount);
-                    transactionList.add(transaction);
-                    //System.out.println("date: " + date + "time: " + time + "description: " + description + "vendor: " + vendor + "amount: " + amount);
-                }count++;
+    private static void mainMenu(){
+        boolean isRunning = true;
+        do {
+            intUserInput = getIntUserInput();
+            switch (intUserInput) {
+                case 1:
+                    //add deposit section
+                    addDeposit();
+                    break;
+                case 2:
+                    //make payment section
+                    break;
+                case 3:
+                    //display ledger section
+                    break;
+                case 4:
+                    // Exit
+                    isRunning = false;
+                    //display goodbyes ui
+                    break;
+                default:
+                    break;
             }
-            bufferedReader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        }while(isRunning);
+    }
+
+    public static void addDeposit(){
+        ui.addDepositUiInit();
+    }
+
+    public static int getIntUserInput(){
+        int intUserInput = scanner.nextInt();
+        scanner.nextLine();
+        return intUserInput;
+    }
+    public static void readFile(String file){
+
     }
 }
