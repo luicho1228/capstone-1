@@ -12,6 +12,10 @@ public class LedgerUI {
     private String productDetailsTitle;
 
     public LedgerUI(){
+        blueTextColor = "\u001B[34m";
+        yellowTextColor ="\u001B[33m";
+        resetTextColor = "\u001B[0m";
+        greenTextColor = "\u001B[32m";
         //homeScreenInit();
     }
 
@@ -52,7 +56,7 @@ public class LedgerUI {
                 "\n1.Yes\t\t\t\t2.No");
     }
     public void showMenuOptions(String[] options){
-        System.out.println("Select an option:");
+        System.out.println(blueTextColor+"Select an option:");
         int menuCount = 1;
         for (String option: options){
             System.out.println("\t"+menuCount+ ". " + option);

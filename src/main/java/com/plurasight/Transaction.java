@@ -2,6 +2,7 @@ package com.plurasight;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
     private LocalDate date;
@@ -9,6 +10,7 @@ public class Transaction {
     private String description;
     private String vendor;
     private double amount;
+    private DateTimeFormatter formatter;
 
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
@@ -16,6 +18,7 @@ public class Transaction {
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
+        formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     }
 
     public LocalDate getDate() {
@@ -58,7 +61,7 @@ public class Transaction {
         this.amount = amount;
     }
     public String toString(){
-        String transactionString = String.format("%s \\| %s \\| %s \\| %s \\| %.2d" , getDate().toString(),getTime().toString(),getDescription(),getVendor(),getAmount());
+        String transactionString = String.format("%s | %s | %s | %s | %.2f \n" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
         return transactionString;
     }
 }

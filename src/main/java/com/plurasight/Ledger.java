@@ -45,7 +45,8 @@ public class Ledger {
 
     private void sortLedger(){
         ledgerArrayList.sort(Comparator.comparing(Transaction::getDate));
-        ledgerArrayList.sort(Comparator.comparing(Transaction::getTime));
+        reverseLedgerOrder();
+        //ledgerArrayList.sort(Comparator.comparing(Transaction::getTime));
     }
     public void reverseLedgerOrder(){
         Collections.reverse(ledgerArrayList);
@@ -57,6 +58,7 @@ public class Ledger {
         timeTransactionHashMap.put(newTransaction.getTime(),newTransaction);
         vendorTransactionHashMap.put(newTransaction.getVendor(), newTransaction);
         amountTransactionHashMap.put(newTransaction.getAmount(), newTransaction);
+        sortLedger();
     }
     public void removeTransaction(Transaction transaction){
         ledgerArrayList.remove(transaction);

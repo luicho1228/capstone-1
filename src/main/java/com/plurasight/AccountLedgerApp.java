@@ -90,7 +90,8 @@ public class AccountLedgerApp {
     }
 
     public static void showLedger(){
-
+        ui.displayTitle("LEDGER");
+        ui.displayProductsInArray(ledger.ledgerArrayList);
     }
 
 
