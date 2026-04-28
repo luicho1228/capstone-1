@@ -39,9 +39,11 @@ public class AccountLedgerApp {
                     break;
                 case 2:
                     //make payment section
+                    addPayment();
                     break;
                 case 3:
                     //display ledger section
+                    showLedger();
                     break;
                 case 4:
                     // Exit
@@ -55,7 +57,8 @@ public class AccountLedgerApp {
     }
 
     public static void addDeposit(){
-        ui.addDepositUiInit();
+        //ui.addDepositUiInit();
+        ui.displayTitle("ADD DEPOSIT");
         ui.promptUser("deposit amount");
         double depositAmount = scanner.nextDouble();
         scanner.nextLine();
@@ -69,7 +72,32 @@ public class AccountLedgerApp {
         ledger.addDeposit(transaction);
     }
     private static void addPayment(){
+        ui.displayTitle("ADD PAYMENT");
+        ui.promptUser("payment amount");
+        double depositAmount = scanner.nextDouble();
+        scanner.nextLine();
+        ui.promptUser("vendor ");
+        String vendor = scanner.nextLine();
+        ui.promptUser("description");
+        String description = scanner.nextLine();
+        confirmTransaction();
+        if(intUserInput == 1) {
+            date = LocalDate.now();
+            time = LocalTime.now();
+            transaction = new Transaction(date, time, description, vendor, depositAmount);
+            ledger.addPayment(transaction);
+        }
+    }
 
+    public static void showLedger(){
+
+    }
+
+
+    public static void confirmTransaction(){
+        ui.confirmTransaction();
+        intUserInput = getIntUserInput();
+        System.out.println("Enter command: ");
     }
 
     public static int getIntUserInput(){

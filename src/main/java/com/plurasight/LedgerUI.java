@@ -21,18 +21,6 @@ public class LedgerUI {
         showMenuOptions(mainMenuOptions);
 
     }
-    public void addDepositUiInit(){
-        displayTitle("ADD DEPOSIT");
-//        String[] addDepositOptions = {};
-//        showMenuOptions(addDepositOptions);
-
-    }
-    public void addPaymentUiInit(){
-        displayTitle("ADD PAYMENT");
-
-    }
-
-
 
 //    public void displayProductDetails(){
 //        int borderLength;
@@ -45,7 +33,6 @@ public class LedgerUI {
 //    }
 
     public void promptUser(String prompt){
-        displayDivider(50);
         System.out.print("Enter " + prompt + ":");
 
     }
@@ -60,7 +47,11 @@ public class LedgerUI {
             }
     }
 
-    private void showMenuOptions(String[] options){
+    public void confirmTransaction(){
+        System.out.println("Are you sure you want to submit this transaction? " +
+                "\n1.Yes\t\t\t\t2.No");
+    }
+    public void showMenuOptions(String[] options){
         System.out.println("Select an option:");
         int menuCount = 1;
         for (String option: options){
@@ -72,7 +63,7 @@ public class LedgerUI {
     }
 
     //helper methods to display decorative components
-    private void displayTitle(String title){
+    public void displayTitle(String title){
         String titleDisplay = "\n";
         int numberString = 50 - title.length();
         for(int i = 0; i < numberString; i++){
@@ -85,7 +76,7 @@ public class LedgerUI {
     public void displayDivider(int length){
         String divider ="";
         for (int i = 0; i < length; i++){
-            divider += "--";
+            divider += "-";
         }
         System.out.println(divider);
     }

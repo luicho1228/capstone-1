@@ -36,7 +36,10 @@ public class Ledger {
     }
 
     public void addPayment(Transaction transaction){
-        totalAmount -= transaction.getAmount();
+        double paymentAmount = transaction.getAmount();
+        paymentAmount = -paymentAmount;
+        transaction.setAmount(paymentAmount);
+        totalAmount += paymentAmount;
         addTransaction(transaction);
     }
 
