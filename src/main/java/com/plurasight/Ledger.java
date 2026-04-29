@@ -29,7 +29,7 @@ public class Ledger {
         vendorTransactionHashMap = new HashMap<>();
         amountTransactionHashMap = new HashMap<>();
         totalAmount = 0.0;
-        loadLedger("transaction_sorted.csv");
+        loadLedger("transactions.csv");
     }
 
     public double getTotalAmount(){
@@ -81,7 +81,7 @@ public class Ledger {
         formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String firstDateOfYear = String.format(year +"/"+"1"+"/"+"1");
         LocalDate dateOfYear = LocalDate.parse(firstDateOfYear,formatter);
-        while(dateOfYear.isBefore(today)){
+        while(dateOfYear.isBefore(today) || dateOfYear.equals(today)){
             transaction = dateTransactionHashMap.get(dateOfYear);
             if(!(transaction == null)) {
                 yearToDateList.add(transaction);
@@ -115,7 +115,7 @@ public class Ledger {
         formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String firstDateOfMonth = today.getYear()+"/"+month +"/"+"1";
         LocalDate datesOfMonth = LocalDate.parse(firstDateOfMonth,formatter);
-        while(datesOfMonth.isBefore(today)){
+        while(datesOfMonth.isBefore(today) || datesOfMonth.equals(today)){
             transaction = dateTransactionHashMap.get(datesOfMonth);
             if(!(transaction == null)) {
                 monthToDateList.add(transaction);
@@ -232,12 +232,12 @@ public class Ledger {
 
     public void saveLedger(){
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions1.csv"));
-            String header = "date|time|description|vendor|amount";
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv"));
+            String header = "date|time|description|vendor|amount\n";
             bufferedWriter.write(header);
             for(Transaction transaction: ledgerArrayList){
-                bufferedWriter.write(transaction.toString());
-            }
+                bufferedWriter.write(transaction.toString() + "\n");
+            }bufferedWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

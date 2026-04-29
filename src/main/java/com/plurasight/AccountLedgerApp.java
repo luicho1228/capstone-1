@@ -115,6 +115,7 @@ public class AccountLedgerApp {
             } else if (intUserInput == 4) {
                 //show reports
                 showReports();
+                displayTransactionList(ledger.getLedgerArrayList());
             } else if (intUserInput == 5) {
                 //back to main menu
                 isShowingList = false;
@@ -125,33 +126,37 @@ public class AccountLedgerApp {
     }
 
     public static void showReports(){
-        ui.displayTitle("REPORTS");
-        ui.promptUser("search filters");
-       // String[] reportsOptions = {"Start Date","End Date","Description", "Vendor", "Amount"};
-        String[] reportsOptions = {"Month to Date","Previous Month","Year to Date", "Previous Year", "Search by Vendor","Back"};
-        ui.showMenuOptions(reportsOptions);
-        intUserInput = getIntUserInput();
-        if(intUserInput == 1){
-            //show month to date report
-            ui.displayProductsInArray(ledger.getMonthToDateList());
-            //showStartDateReport();
-        } else if (intUserInput == 2) {
-            //show previous month report
-            ui.displayProductsInArray(ledger.getPreviousMonthList());
-        }else if(intUserInput == 3){
-            //show years to date report
-            ui.displayProductsInArray(ledger.getYearsToDateList());
-        }else if (intUserInput == 4){
-            //show previous year report
-            ui.displayProductsInArray(ledger.getPreviousYearList());
-        } else if (intUserInput == 5) {
-            //show search by vendor report
-            ui.promptUser("Vendor");
-            String vendorName = scanner.nextLine();
-            ui.displayProductsInArray(ledger.getTransactionListByVendor(vendorName));
-        } else if (intUserInput == 6) {
-            // Back to main exit option
-        }
+        boolean isRunning = true;
+        do {
+            ui.displayTitle("REPORTS");
+            ui.promptUser("search filters");
+            // String[] reportsOptions = {"Start Date","End Date","Description", "Vendor", "Amount"};
+            String[] reportsOptions = {"Month to Date", "Previous Month", "Year to Date", "Previous Year", "Search by Vendor", "Back"};
+            ui.showMenuOptions(reportsOptions);
+            intUserInput = getIntUserInput();
+            if (intUserInput == 1) {
+                //show month to date report
+                ui.displayProductsInArray(ledger.getMonthToDateList());
+                //showStartDateReport();
+            } else if (intUserInput == 2) {
+                //show previous month report
+                ui.displayProductsInArray(ledger.getPreviousMonthList());
+            } else if (intUserInput == 3) {
+                //show years to date report
+                ui.displayProductsInArray(ledger.getYearsToDateList());
+            } else if (intUserInput == 4) {
+                //show previous year report
+                ui.displayProductsInArray(ledger.getPreviousYearList());
+            } else if (intUserInput == 5) {
+                //show search by vendor report
+                ui.promptUser("Vendor");
+                String vendorName = scanner.nextLine();
+                ui.displayProductsInArray(ledger.getTransactionListByVendor(vendorName));
+            } else if (intUserInput == 6) {
+                // Back to main exit option
+                isRunning = false;
+            }
+        }while (isRunning);
     }
     public static void showStartDateReport(){
         ui.promptUser("start date(yyyy-mm-dd)");

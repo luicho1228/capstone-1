@@ -70,7 +70,7 @@ public class Transaction {
         this.amount = amount;
     }
     public String toString(){
-        String transactionString = String.format("%s | %s | %s | %s | %.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+        String transactionString = String.format("%s|%s|%s|%s|%.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
         return transactionString;
     }
 }
