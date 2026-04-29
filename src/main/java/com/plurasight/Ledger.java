@@ -63,6 +63,39 @@ public class Ledger {
         addTransaction(transaction);
     }
 
+    public ArrayList<Transaction> getYearsToDateList(){
+        ArrayList<Transaction>yearToDateList = new ArrayList<>();
+        Transaction transaction;
+        today = LocalDate.now();
+        int year = today.getYear();
+        formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+        String firstDateOfYear = String.format(year +"/"+"1"+"/"+"1");
+        LocalDate dateOfYear = LocalDate.parse(firstDateOfYear,formatter);
+        while(dateOfYear.isBefore(today)){
+            transaction = dateTransactionHashMap.get(dateOfYear);
+            if(!(transaction == null)) {
+                yearToDateList.add(transaction);
+            }dateOfYear = dateOfYear.plusDays(1);
+        }
+        return yearToDateList;
+    }
+    public ArrayList<Transaction> getPreviousYearList(){
+        ArrayList<Transaction> preYearList = new ArrayList<>();
+        Transaction transaction;
+        today = LocalDate.now();
+        LocalDate previousYear = today.minusYears(1);
+        int lengthOfYear = previousYear.lengthOfYear();
+        String firstDateOfYear = String.format(previousYear.getYear()+"/"+"1"+"/"+"1");
+        LocalDate dateOfMonth = LocalDate.parse(firstDateOfYear,formatter);
+        for(int dayOfMonth = 1; dayOfMonth <= lengthOfYear;dayOfMonth++){
+            transaction = dateTransactionHashMap.get(dateOfMonth);
+            if (transaction != null){
+                preYearList.add(transaction);
+            }dateOfMonth = dateOfMonth.plusDays(1);
+        }
+        return preYearList;
+    }
+
     public ArrayList<Transaction> getMonthToDateList(){
         ArrayList<Transaction>monthToDateList = new ArrayList<>();
         Transaction transaction;
