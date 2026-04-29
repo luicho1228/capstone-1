@@ -158,6 +158,20 @@ public class AccountLedgerApp {
             }
         }while (isRunning);
     }
+
+    public void customSearch(){
+        ui.displayTitle("CUSTOM SEARCH");
+        ui.promptUser("Start Date");
+        String startDate = scanner.nextLine();
+        ui.promptUser("End Date");
+        String endDate = scanner.nextLine();
+        ui.promptUser("Description");
+        String description = scanner.nextLine();
+        ui.promptUser("Vendor");
+        String vendor = scanner.nextLine();
+        ui.promptUser("Amount");
+        double amount = scanner.nextDouble();
+    }
     public static void showStartDateReport(){
         ui.promptUser("start date(yyyy-mm-dd)");
         String userInputString = scanner.nextLine();
