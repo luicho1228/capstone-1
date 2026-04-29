@@ -136,6 +136,7 @@ public class AccountLedgerApp {
             //showStartDateReport();
         } else if (intUserInput == 2) {
             //show previous month report
+            ui.displayProductsInArray(ledger.getPreviousMonthList());
         }else if(intUserInput == 3){
             //show years to date report
         }else if (intUserInput == 4){

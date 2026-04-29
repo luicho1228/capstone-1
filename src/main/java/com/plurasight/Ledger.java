@@ -84,8 +84,19 @@ public class Ledger {
         ArrayList<Transaction> preMonthList = new ArrayList<>();
         Transaction transaction;
         today = LocalDate.now();
-        today.minusMonths(1);
-
+        LocalDate lastMonth = today.minusMonths(1);
+        int lengthOfMonth = lastMonth.lengthOfMonth();
+        formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+        String firstDayOfMonth = String.format(today.getYear() +"/"+lastMonth.getMonthValue()+"/"+"1");
+        LocalDate dateOfMonth = LocalDate.parse(firstDayOfMonth,formatter);
+        //String lastDayOfMonth = String.format(today.getYear() +"/"+lastMonth.getMonthValue()+"/"+lengthOfMonth);
+        for(int currentDay = 1; currentDay <= lengthOfMonth; currentDay++){
+            transaction = dateTransactionHashMap.get(dateOfMonth);
+            if(transaction != null){
+                preMonthList.add(transaction);
+            }dateOfMonth = dateOfMonth.plusDays(1);
+        }
+        return preMonthList;
     }
 
     public ArrayList<Transaction> searchMonthToDateList(LocalDate preMonth){
