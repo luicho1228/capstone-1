@@ -63,6 +63,18 @@ public class Ledger {
         addTransaction(transaction);
     }
 
+    public ArrayList<Transaction> getTransactionListByVendor(String vendor){
+        ArrayList<Transaction>vendorList = new ArrayList<>();
+        Transaction transaction;
+        for (Transaction currentTransaction: ledgerArrayList){
+            if (vendor.equalsIgnoreCase(currentTransaction.getVendor())){
+                transaction = currentTransaction;
+                vendorList.add(transaction);
+            }
+        }
+        return vendorList;
+    }
+
     public ArrayList<Transaction> getYearsToDateList(){
         ArrayList<Transaction>yearToDateList = new ArrayList<>();
         Transaction transaction;
@@ -85,6 +97,7 @@ public class Ledger {
         today = LocalDate.now();
         LocalDate previousYear = today.minusYears(1);
         int lengthOfYear = previousYear.lengthOfYear();
+        formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String firstDateOfYear = String.format(previousYear.getYear()+"/"+"1"+"/"+"1");
         LocalDate dateOfMonth = LocalDate.parse(firstDateOfYear,formatter);
         for(int dayOfMonth = 1; dayOfMonth <= lengthOfYear;dayOfMonth++){

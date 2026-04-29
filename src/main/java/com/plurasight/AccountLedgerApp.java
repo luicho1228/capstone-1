@@ -142,9 +142,10 @@ public class AccountLedgerApp {
             ui.displayProductsInArray(ledger.getYearsToDateList());
         }else if (intUserInput == 4){
             //show previous year report
-            //ui.displayProductsInArray();
+            ui.displayProductsInArray(ledger.getPreviousYearList());
         } else if (intUserInput == 5) {
             //show search by vendor report
+            ui.displayProductsInArray(ledger.getTransactionListByVendor("Bank"));
         } else if (intUserInput == 6) {
             // Back to main exit option
         }
