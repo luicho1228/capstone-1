@@ -145,7 +145,9 @@ public class AccountLedgerApp {
             ui.displayProductsInArray(ledger.getPreviousYearList());
         } else if (intUserInput == 5) {
             //show search by vendor report
-            ui.displayProductsInArray(ledger.getTransactionListByVendor("Bank"));
+            ui.promptUser("Vendor");
+            String vendorName = scanner.nextLine();
+            ui.displayProductsInArray(ledger.getTransactionListByVendor(vendorName));
         } else if (intUserInput == 6) {
             // Back to main exit option
         }
