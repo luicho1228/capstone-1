@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Ledger {
@@ -16,7 +18,9 @@ public class Ledger {
     private HashMap<LocalTime, Transaction> timeTransactionHashMap;
     private HashMap<String, Transaction> vendorTransactionHashMap;
     private HashMap<Double,Transaction> amountTransactionHashMap;
+    private DateTimeFormatter formatter;
     private double totalAmount;
+    private LocalDate today;
 
     public Ledger(){
         ledgerArrayList = new ArrayList<>();
@@ -57,6 +61,51 @@ public class Ledger {
         totalAmount += paymentAmount;
         paymentArrayList.add(transaction);
         addTransaction(transaction);
+    }
+
+    public ArrayList<Transaction> getMonthToDateList(){
+        ArrayList<Transaction>monthToDateList = new ArrayList<>();
+        Transaction transaction;
+        today = LocalDate.now();
+        int month = today.getMonthValue();
+        formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+        String firstDateOfMonth = today.getYear()+"/"+month +"/"+"1";
+        LocalDate datesOfMonth = LocalDate.parse(firstDateOfMonth,formatter);
+        while(datesOfMonth.isBefore(today)){
+            transaction = dateTransactionHashMap.get(datesOfMonth);
+            if(!(transaction == null)) {
+                monthToDateList.add(transaction);
+            }datesOfMonth = datesOfMonth.plusDays(1);
+        }
+        return monthToDateList;
+    }
+
+    public ArrayList<Transaction> getPreviousMonthList(){
+        ArrayList<Transaction> preMonthList = new ArrayList<>();
+        Transaction transaction;
+        today = LocalDate.now();
+        today.minusMonths(1);
+
+    }
+
+    public ArrayList<Transaction> searchMonthToDateList(LocalDate preMonth){
+        ArrayList<Transaction>monthToDateList = new ArrayList<>();
+        today = LocalDate.now();
+        while (preMonth.isBefore(today)){
+            monthToDateList.add(dateTransactionHashMap.get(preMonth));
+            preMonth = preMonth.plusDays(1);
+        }
+        return monthToDateList;
+    }
+
+    public ArrayList<Transaction> searchListByVendor(String vendor){
+        ArrayList<Transaction> vendorArrayList = new ArrayList<>();
+        for (Transaction transaction: ledgerArrayList){
+            if (vendor.equalsIgnoreCase(transaction.getVendor())){
+                vendorArrayList.add(transaction);
+            }
+        }
+        return vendorArrayList;
     }
 
     private void sortLedger(){

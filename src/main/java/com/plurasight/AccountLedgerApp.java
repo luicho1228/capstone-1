@@ -113,6 +113,7 @@ public class AccountLedgerApp {
                 displayTransactionList(ledger.getPaymentArrayList());
             } else if (intUserInput == 4) {
                 //show reports
+                showReports();
             } else if (intUserInput == 5) {
                 //back to main menu
                 isShowingList = false;
@@ -122,7 +123,32 @@ public class AccountLedgerApp {
 
     }
 
-    public void showReports(){
+    public static void showReports(){
+        ui.displayTitle("REPORTS");
+        ui.promptUser("search filters");
+       // String[] reportsOptions = {"Start Date","End Date","Description", "Vendor", "Amount"};
+        String[] reportsOptions = {"Month to Date","Previous Month","Year to Date", "Previous Year", "Search by Vendor","Back"};
+        ui.showMenuOptions(reportsOptions);
+        intUserInput = getIntUserInput();
+        if(intUserInput == 1){
+            //show month to date report
+            ui.displayProductsInArray(ledger.getMonthToDateList());
+            //showStartDateReport();
+        } else if (intUserInput == 2) {
+            //show previous month report
+        }else if(intUserInput == 3){
+            //show years to date report
+        }else if (intUserInput == 4){
+            //show previous year report
+        } else if (intUserInput == 5) {
+            //show search by vendor report
+        } else if (intUserInput == 6) {
+            // Back to main exit option
+        }
+    }
+    public static void showStartDateReport(){
+        ui.promptUser("start date(yyyy-mm-dd)");
+        String userInputString = scanner.nextLine();
 
     }
 
