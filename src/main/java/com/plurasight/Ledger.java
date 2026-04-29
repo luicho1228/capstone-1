@@ -1,8 +1,6 @@
 package com.plurasight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -227,6 +225,19 @@ public class Ledger {
             }
             sortLedger();
             bufferedReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveLedger(){
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions1.csv"));
+            String header = "date|time|description|vendor|amount";
+            bufferedWriter.write(header);
+            for(Transaction transaction: ledgerArrayList){
+                bufferedWriter.write(transaction.toString());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

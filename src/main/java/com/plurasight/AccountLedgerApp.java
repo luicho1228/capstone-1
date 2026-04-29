@@ -48,6 +48,7 @@ public class AccountLedgerApp {
                 case 4:
                     // Exit
                     isRunning = false;
+                    ledger.saveLedger();
                     //display goodbyes ui
                     break;
                 default:
