@@ -156,9 +156,7 @@ public class Ledger {
             }
             if (transaction.getDate().isBefore(endDateTemp) || transaction.getDate().equals(endDateTemp)){
             }
-
         }
-
         return customTransactionList;
     }
 
