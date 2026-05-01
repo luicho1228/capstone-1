@@ -76,9 +76,9 @@ public class Transaction {
     public String toString(){
         String transactionString;
         if(amount < 0){
-            transactionString = String.format("%s|%s|%s|%s|"+redTextColor+"%.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+            transactionString = String.format(" %-12s | %-10s | %-25s | %-20s | "+redTextColor+"%10.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
         }else {
-            transactionString = String.format("%s|%s|%s|%s|"+greenTextColor+"%.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+            transactionString = String.format(" %-12s | %-10s | %-25s | %-20s | "+greenTextColor+"%10.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
 
         }
 

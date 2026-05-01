@@ -11,6 +11,7 @@ public class LedgerUI {
     private String resetTextColor;
     private String boldText;
     private String productDetailsTitle;
+    private String categories;
 
     public LedgerUI(){
         blueTextColor = "\u001B[34m";
@@ -18,7 +19,8 @@ public class LedgerUI {
         resetTextColor = "\u001B[0m";
         greenTextColor = "\u001B[32m";
         boldText = "\u001B[1m";
-
+        String headerFormat = " | %-12s | %-10s | %-25s | %-20s | %-10s ";
+        categories = String.format(headerFormat,"Date","Time","Description","Vendor","Total");
         //homeScreenInit();
     }
 
@@ -42,15 +44,15 @@ public class LedgerUI {
         return "\t\t\t\t\t";
     }
 
-//    public void displayProductDetails(){
-//        int borderLength;
-//        String border = "\t";
-//        for(int i = 0; i < borderLength; i++){
-//            border += "-";
-//        }
-//        System.out.println(border);
-//        System.out.println();
-//    }
+    public void displayProductDetails(){
+        int borderLength = 0;
+        String border = "\t";
+        for(int i = 0; i < borderLength; i++){
+            border += "-";
+        }
+        System.out.println(border);
+        System.out.println();
+    }
 
     public void promptUser(String prompt){
         System.out.print(addTabs() + "Enter " + prompt + ":");
@@ -62,9 +64,10 @@ public class LedgerUI {
     }
 
     public void displayProductsInArray(ArrayList<Transaction> transactions){
-            for (Transaction transaction : transactions) {
-               displayProduct(transaction);
-            }
+        System.out.println(addTabs() + "\t" + blueTextColor + categories);
+        for (Transaction transaction : transactions) {
+            displayProduct(transaction);
+        }
     }
 
     public void confirmTransaction(){

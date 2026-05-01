@@ -237,8 +237,10 @@ public class Ledger {
                     Transaction transaction = new Transaction(date, time, description, vendor, amount);
                     if (transaction.getAmount() > 0){
                         depositsArrayList.add(transaction);
+                        totalAmount += transaction.getAmount();
                     } else if (transaction.getAmount() < 0) {
                         paymentArrayList.add(transaction);
+                        totalAmount -= transaction.getAmount();
                     }
                     this.addTransaction(transaction);
                     //System.out.println("date: " + date + "time: " + time + "description: " + description + "vendor: " + vendor + "amount: " + amount);

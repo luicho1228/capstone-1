@@ -2,6 +2,7 @@ package com.plurasight;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -53,6 +54,25 @@ public class AccountLedgerApp {
         }while(isRunning);
     }
 
+    public static void confirmDate(){
+        System.out.println("\n" + ui.addTabs()+"would you like to set a date and time for this transaction?\n");
+        System.out.println(ui.addTabs()+"1.yes\t\t\t\t2.No\n");
+        intUserInput = getIntUserInput();
+        if (intUserInput == 1) {
+            ui.promptUser("Date in the following format (yyyy/mm/dd)");
+            String userInput = scanner.nextLine();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            date = LocalDate.parse(userInput, formatter);
+            ui.promptUser("time in the following format (hh:mm AM or PM)");
+            userInput = scanner.nextLine();
+            formatter = DateTimeFormatter.ofPattern("hh:mm[ a]");
+            time = LocalTime.parse(userInput,formatter);
+        } else if (intUserInput == 2) {
+            date = LocalDate.now();
+            time = LocalTime.now();
+        }
+    }
+
     public static void addDeposit(){
         //ui.addDepositUiInit();
         ui.displayTitle("ADD DEPOSIT");
@@ -62,10 +82,9 @@ public class AccountLedgerApp {
         String vendor = scanner.nextLine();
         ui.promptUser("description");
         String description = scanner.nextLine();
+        confirmDate();
         confirmTransaction();
         if(intUserInput == 1) {
-            date = LocalDate.now();
-            time = LocalTime.now();
             transaction = new Transaction(date, time, description, vendor, depositAmount);
             transaction.setType("deposit");
             ledger.addDeposit(transaction);
@@ -79,10 +98,9 @@ public class AccountLedgerApp {
         String vendor = scanner.nextLine();
         ui.promptUser("description");
         String description = scanner.nextLine();
+        confirmDate();
         confirmTransaction();
         if(intUserInput == 1) {
-            date = LocalDate.now();
-            time = LocalTime.now();
             transaction = new Transaction(date, time, description, vendor, depositAmount);
             transaction.setType("payment");
             ledger.addPayment(transaction);
@@ -180,6 +198,8 @@ public class AccountLedgerApp {
     public static void displayTransactionList(ArrayList<Transaction> transactions){
         ui.displayTitle("LEDGER");
         ui.displayProductsInArray(transactions);
+
+        System.out.printf("\n"+ui.addTabs() + ui.addTabs() + ui.addTabs() + ui.addTabs() +"\t\t\t\t%s %.2f", "Total balance: ",ledger.getTotalAmount());
         String[] ledgerOptions = {"Show All", "Show Deposits", "Show Payments","Show Reports","Home"};
         ui.displayTitle("FILTER SEARCH AND REPORTS");
         ui.showMenuOptions(ledgerOptions);
