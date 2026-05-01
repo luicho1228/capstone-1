@@ -117,9 +117,7 @@ public class Ledger {
             for(Transaction transaction1: ledgerArrayList){
                 if (transaction1.getDate().equals(datesOfMonth)) {
                     transaction = transaction1;
-                    if(!(transaction == null)) {
-                        monthToDateList.add(transaction);
-                    }
+                    monthToDateList.add(transaction);
                 }
             }
            datesOfMonth = datesOfMonth.plusDays(1);
@@ -136,7 +134,6 @@ public class Ledger {
         formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String firstDayOfMonth = String.format(today.getYear() +"/"+lastMonth.getMonthValue()+"/"+"1");
         LocalDate dateOfMonth = LocalDate.parse(firstDayOfMonth,formatter);
-        //String lastDayOfMonth = String.format(today.getYear() +"/"+lastMonth.getMonthValue()+"/"+lengthOfMonth);
         for(int currentDay = 1; currentDay <= lengthOfMonth; currentDay++){
             transaction = dateTransactionHashMap.get(dateOfMonth);
             if(transaction != null){
@@ -230,10 +227,10 @@ public class Ledger {
                     // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                     LocalDate date = LocalDate.parse(fileParts[0]);
                     //formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    LocalTime time = LocalTime.parse(fileParts[1]);
-                    String description = fileParts[2];
-                    String vendor = fileParts[3];
-                    double amount = Double.parseDouble(fileParts[4]);
+                    LocalTime time = LocalTime.parse(fileParts[1].strip());
+                    String description = fileParts[2].strip();
+                    String vendor = fileParts[3].strip();
+                    double amount = Double.parseDouble(fileParts[4].strip());
                     Transaction transaction = new Transaction(date, time, description, vendor, amount);
                     if (transaction.getAmount() > 0){
                         depositsArrayList.add(transaction);
@@ -259,7 +256,7 @@ public class Ledger {
             String header = "date|time|description|vendor|amount\n";
             bufferedWriter.write(header);
             for(Transaction transaction: ledgerArrayList){
-                bufferedWriter.write(transaction.toString() + "\n");
+                bufferedWriter.write(transaction.toStringWriter() + "\n");
             }bufferedWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);

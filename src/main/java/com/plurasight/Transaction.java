@@ -70,9 +70,14 @@ public class Transaction {
         return amount;
     }
 
+    public String toStringWriter(){
+        return String.format("%s|%s|%s|%s|%.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+    }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
     public String toString(){
         String transactionString;
         if(amount < 0){
