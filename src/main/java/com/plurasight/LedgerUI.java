@@ -72,14 +72,14 @@ public class LedgerUI {
               "\n"+ addTabs() + "1.Yes\t\t\t\t2.No");
     }
     public void showMenuOptions(String[] options){
-        System.out.println(addTabs() + blueTextColor+"Select an option:");
+        System.out.println("\n"+addTabs() + blueTextColor+"Select an option:" + resetTextColor);
         int menuCount = 1;
         for (String option: options){
-            System.out.println(addTabs() + addTabs()+"\t"+menuCount+ ". " + option);
+            System.out.println(addTabs() + addTabs()+"\t" + blueTextColor +menuCount+ ". "+resetTextColor + option);
             menuCount++;
         }
-        displayDivider(50);
-        System.out.print(addTabs() + "Enter command: ");
+        displayDivider(100);
+        System.out.print(addTabs() + blueTextColor +"Enter command: " + resetTextColor);
     }
     public void displayInputError(){
         System.out.println(addTabs() + "Please try again and enter one of the options provided");
@@ -97,13 +97,13 @@ public class LedgerUI {
             if(i == (numberString/2)){
                 titleDisplay += title;
             }
-        }System.out.println(boldText + titleDisplay + "\n");
+        }System.out.println(boldText + resetTextColor + titleDisplay + "\n");
     }
     public void displayDivider(int length){
         String divider ="";
         for (int i = 0; i < length; i++){
             divider += "-";
         }
-        System.out.println(addTabs() + divider);
+        System.out.println(addTabs()+blueTextColor+ divider+resetTextColor);
     }
 }

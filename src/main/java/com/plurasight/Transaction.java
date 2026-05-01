@@ -11,7 +11,9 @@ public class Transaction {
     private String vendor;
     private double amount;
     private DateTimeFormatter formatter;
-    private   String transactionType;
+    private String transactionType;
+    private String greenTextColor;
+    private String redTextColor;
 
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
@@ -20,6 +22,8 @@ public class Transaction {
         this.vendor = vendor;
         this.amount = amount;
         formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        greenTextColor = "\u001B[32m";
+        redTextColor = "\u001B[31m";
     }
 
     public void setType(String transactionType){
@@ -70,7 +74,14 @@ public class Transaction {
         this.amount = amount;
     }
     public String toString(){
-        String transactionString = String.format("%s|%s|%s|%s|%.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+        String transactionString;
+        if(amount < 0){
+            transactionString = String.format("%s|%s|%s|%s|"+redTextColor+"%.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+        }else {
+            transactionString = String.format("%s|%s|%s|%s|"+greenTextColor+"%.2f" , getDate().toString(),formatter.format(getTime()),getDescription(),getVendor(),getAmount());
+
+        }
+
         return transactionString;
     }
 }

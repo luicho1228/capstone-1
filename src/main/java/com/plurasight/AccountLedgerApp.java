@@ -121,7 +121,7 @@ public class AccountLedgerApp {
         boolean isRunning = true;
         do {
             ui.displayTitle("REPORTS");
-            ui.promptUser("search filters");
+            //ui.promptUser("search filters");
             // String[] reportsOptions = {"Start Date","End Date","Description", "Vendor", "Amount"};
             String[] reportsOptions = {"Month to Date", "Previous Month", "Year to Date", "Previous Year", "Search by Vendor", "Custom Search" , "Back"};
             ui.showMenuOptions(reportsOptions);
