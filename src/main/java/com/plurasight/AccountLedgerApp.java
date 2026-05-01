@@ -52,6 +52,7 @@ public class AccountLedgerApp {
                     //display goodbyes ui
                     break;
                 default:
+                    ui.displayInputError();
                     break;
             }
         }while(isRunning);
@@ -119,6 +120,8 @@ public class AccountLedgerApp {
             } else if (intUserInput == 5) {
                 //back to main menu
                 isShowingList = false;
+            }else{
+                ui.displayInputError();
             }
         }while (isShowingList);
 
@@ -131,7 +134,7 @@ public class AccountLedgerApp {
             ui.displayTitle("REPORTS");
             ui.promptUser("search filters");
             // String[] reportsOptions = {"Start Date","End Date","Description", "Vendor", "Amount"};
-            String[] reportsOptions = {"Month to Date", "Previous Month", "Year to Date", "Previous Year", "Search by Vendor", "Back"};
+            String[] reportsOptions = {"Month to Date", "Previous Month", "Year to Date", "Previous Year", "Search by Vendor", "Custom Search" , "Back"};
             ui.showMenuOptions(reportsOptions);
             intUserInput = getIntUserInput();
             if (intUserInput == 1) {
@@ -154,23 +157,37 @@ public class AccountLedgerApp {
                 ui.displayProductsInArray(ledger.getTransactionListByVendor(vendorName));
             } else if (intUserInput == 6) {
                 // Back to main exit option
+                customSearch();
+                //isRunning = false;
+            }else if (intUserInput == 7){
                 isRunning = false;
+            }
+            else{
+                ui.displayInputError();
             }
         }while (isRunning);
     }
 
-    public void customSearch(){
+    public static void customSearch(){
+        ArrayList<Transaction> customList = ledger.getLedgerArrayList();
         ui.displayTitle("CUSTOM SEARCH");
         ui.promptUser("Start Date");
         String startDate = scanner.nextLine();
+        customList = ledger.getStartDateList(startDate,customList);
         ui.promptUser("End Date");
         String endDate = scanner.nextLine();
+        customList = ledger.getEndDateList(endDate, customList);
         ui.promptUser("Description");
         String description = scanner.nextLine();
+        customList = ledger.getDescriptionList(description,customList);
         ui.promptUser("Vendor");
         String vendor = scanner.nextLine();
+        customList = ledger.getVendorList(vendor, customList);
         ui.promptUser("Amount");
         double amount = scanner.nextDouble();
+        customList = ledger.getAmountList(amount, customList);
+        ui.displayProductsInArray(customList);
+        //ledger.getTransactionsByCustomSearch(startDate,endDate,description,vendor,amount);
     }
     public static void showStartDateReport(){
         ui.promptUser("start date(yyyy-mm-dd)");

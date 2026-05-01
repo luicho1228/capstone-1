@@ -143,14 +143,78 @@ public class Ledger {
         return preMonthList;
     }
 
-    public ArrayList<Transaction> searchMonthToDateList(LocalDate preMonth){
-        ArrayList<Transaction>monthToDateList = new ArrayList<>();
-        today = LocalDate.now();
-        while (preMonth.isBefore(today)){
-            monthToDateList.add(dateTransactionHashMap.get(preMonth));
-            preMonth = preMonth.plusDays(1);
+    public ArrayList<Transaction>getTransactionsByCustomSearch(String startDate, String endDate, String description, String vendor, double amount){
+        ArrayList<Transaction>customTransactionList = ledgerArrayList;
+        ArrayList<Transaction>tempList = new ArrayList<>();
+        LocalDate startDateTemp = LocalDate.parse(startDate);
+        LocalDate endDateTemp = LocalDate.parse(endDate);
+
+        for (Transaction transaction: customTransactionList){
+            if (transaction.getDate().isAfter(startDateTemp) || transaction.getDate().equals(startDateTemp)) {
+                //customTransactionList.add(transaction);
+                tempList.add(transaction);
+            }
+            if (transaction.getDate().isBefore(endDateTemp) || transaction.getDate().equals(endDateTemp)){
+            }
+
         }
-        return monthToDateList;
+
+        return customTransactionList;
+    }
+
+
+    public ArrayList<Transaction>getStartDateList(String date, ArrayList<Transaction>customList){
+        ArrayList<Transaction> tempCustomList = new ArrayList<>();
+        formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate startDate = LocalDate.parse(date,formatter);
+        for (Transaction transaction : customList) {
+            if (transaction.getDate().isAfter(startDate) || transaction.getDate().equals(startDate)) {
+                    tempCustomList.add(transaction);
+            }
+        }
+        return tempCustomList;
+    }
+
+    public ArrayList<Transaction>getEndDateList(String date, ArrayList<Transaction>customList){
+        ArrayList<Transaction> tempCustomList = new ArrayList<>();
+        formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate endDate = LocalDate.parse(date, formatter);
+        for (Transaction transaction : customList) {
+            if (transaction.getDate().isBefore(endDate) || transaction.getDate().equals(endDate)) {
+                tempCustomList.add(transaction);
+            }
+        }
+        return tempCustomList;
+    }
+
+    public ArrayList<Transaction>getDescriptionList(String description, ArrayList<Transaction>customList){
+        ArrayList<Transaction> tempCustomList = new ArrayList<>();
+        for (Transaction transaction: customList){
+            if (transaction.getDescription().equalsIgnoreCase(description)){
+                tempCustomList.add(transaction);
+            }
+        }
+        return tempCustomList;
+    }
+
+    public ArrayList<Transaction>getVendorList(String vendor, ArrayList<Transaction>customList){
+        ArrayList<Transaction> tempCustomList = new ArrayList<>();
+        for (Transaction transaction: customList){
+            if (transaction.getVendor().equalsIgnoreCase(vendor)){
+                tempCustomList.add(transaction);
+            }
+        }
+        return tempCustomList;
+    }
+
+    public ArrayList<Transaction>getAmountList(double amount, ArrayList<Transaction>customList ){
+        ArrayList<Transaction> tempCustomList = new ArrayList<>();
+        for (Transaction transaction: customList){
+            if (transaction.getAmount() == amount){
+                tempCustomList.add(transaction);
+            }
+        }
+        return tempCustomList;
     }
 
     public ArrayList<Transaction> searchListByVendor(String vendor){
@@ -179,13 +243,6 @@ public class Ledger {
         vendorTransactionHashMap.put(newTransaction.getVendor(), newTransaction);
         amountTransactionHashMap.put(newTransaction.getAmount(), newTransaction);
         sortLedger();
-    }
-    public void removeTransaction(Transaction transaction){
-        ledgerArrayList.remove(transaction);
-        dateTransactionHashMap.remove(transaction.getDate());
-        timeTransactionHashMap.remove(transaction.getTime());
-        vendorTransactionHashMap.remove(transaction.getVendor());
-        amountTransactionHashMap.remove(transaction.getAmount());
     }
 
     public Transaction getTransactionByDate(LocalDate date){

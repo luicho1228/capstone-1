@@ -65,6 +65,9 @@ public class LedgerUI {
         displayDivider(50);
         System.out.print("Enter command: ");
     }
+    public void displayInputError(){
+        System.out.println("Please try again and enter one of the options provided");
+    }
 
     //helper methods to display decorative components
     public void displayTitle(String title){
