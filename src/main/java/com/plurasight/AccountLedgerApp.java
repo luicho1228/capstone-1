@@ -187,8 +187,8 @@ public class AccountLedgerApp {
 
     public static void confirmTransaction(){
         ui.confirmTransaction();
+        System.out.println(ui.addTabs() + "Enter command: ");
         intUserInput = getIntUserInput();
-        System.out.println("Enter command: ");
     }
 
     public static double getUserInputDouble(){

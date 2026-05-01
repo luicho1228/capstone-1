@@ -107,17 +107,22 @@ public class Ledger {
 
     public ArrayList<Transaction> getMonthToDateList(){
         ArrayList<Transaction>monthToDateList = new ArrayList<>();
-        Transaction transaction;
+        Transaction transaction = null;
         today = LocalDate.now();
         int month = today.getMonthValue();
         formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String firstDateOfMonth = today.getYear()+"/"+month +"/"+"1";
         LocalDate datesOfMonth = LocalDate.parse(firstDateOfMonth,formatter);
         while(datesOfMonth.isBefore(today) || datesOfMonth.equals(today)){
-            transaction = dateTransactionHashMap.get(datesOfMonth);
-            if(!(transaction == null)) {
-                monthToDateList.add(transaction);
-            }datesOfMonth = datesOfMonth.plusDays(1);
+            for(Transaction transaction1: ledgerArrayList){
+                if (transaction1.getDate().equals(datesOfMonth)) {
+                    transaction = transaction1;
+                    if(!(transaction == null)) {
+                        monthToDateList.add(transaction);
+                    }
+                }
+            }
+           datesOfMonth = datesOfMonth.plusDays(1);
         }
         return monthToDateList;
     }

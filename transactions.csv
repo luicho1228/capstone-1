@@ -1,5 +1,8 @@
 date|time|description|vendor|amount
+2026-05-01|02:53:55|got 3 beers|Bar|-20.00
 2026-05-01|02:45:49|got paid|bank|45.00
+2026-05-01|02:50:14|I owed him some money|Dad|-130.00
+2026-05-01|02:49:43|I got paid again!|Bank|960.24
 2026-04-29|11:14:13|I got paid!!|Bank|550.00
 2026-04-24|10:05:00|Emergency consulting payment|Acme Client|675.00
 2026-04-22|15:55:10|Monitor stand|Amazon|-44.95
