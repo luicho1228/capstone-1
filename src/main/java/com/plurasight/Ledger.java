@@ -6,7 +6,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+
 public class Ledger {
+    //Field variables
     private ArrayList<Transaction> ledgerArrayList;
     private ArrayList<Transaction> depositsArrayList;
     private ArrayList<Transaction> paymentArrayList;
@@ -18,6 +20,7 @@ public class Ledger {
     private double totalAmount;
     private LocalDate today;
 
+    //Constructor
     public Ledger(){
         ledgerArrayList = new ArrayList<>();
         depositsArrayList = new ArrayList<>();
@@ -33,14 +36,14 @@ public class Ledger {
     public double getTotalAmount(){
         return totalAmount;
     }
-
     public ArrayList<Transaction> getLedgerArrayList(){
         return ledgerArrayList;
     }
-
+    //retreaves all deposits saved in the file
     public ArrayList<Transaction> getDepositsArrayList(){
         return depositsArrayList;
     }
+    //retreaves all the payments saved in the file
     public ArrayList<Transaction> getPaymentArrayList(){
         return paymentArrayList;
     }
@@ -49,7 +52,6 @@ public class Ledger {
         depositsArrayList.add(transaction);
         addTransaction(transaction);
     }
-
     public void addPayment(Transaction transaction){
         double paymentAmount = transaction.getAmount();
         paymentAmount = -paymentAmount;
@@ -58,7 +60,6 @@ public class Ledger {
         paymentArrayList.add(transaction);
         addTransaction(transaction);
     }
-
     public ArrayList<Transaction> getTransactionListByVendor(String vendor){
         ArrayList<Transaction>vendorList = new ArrayList<>();
         Transaction transaction;
@@ -70,7 +71,6 @@ public class Ledger {
         }
         return vendorList;
     }
-
     public ArrayList<Transaction> getYearsToDateList(){
         ArrayList<Transaction>yearToDateList = new ArrayList<>();
         Transaction transaction;
