@@ -9,6 +9,7 @@ public class LedgerUI {
     private String yellowTextColor;
     private String greenTextColor;
     private String resetTextColor;
+    private String boldText;
     private String productDetailsTitle;
 
     public LedgerUI(){
@@ -16,14 +17,29 @@ public class LedgerUI {
         yellowTextColor ="\u001B[33m";
         resetTextColor = "\u001B[0m";
         greenTextColor = "\u001B[32m";
+        boldText = "\u001B[1m";
+
         //homeScreenInit();
     }
 
     public void homeScreenInit(){
+        System.out.println("\n"+addTabs()+"  ░██████                                                ░████████                         ░██       \n" +
+               addTabs()+ " ░██   ░██                                               ░██    ░██                        ░██       \n" +
+               addTabs()+ "░██         ░██    ░██ ░████████   ░███████  ░██░████    ░██    ░██   ░██████   ░████████  ░██    ░██\n" + addTabs()+" ░████████  ░██    ░██ ░██    ░██ ░██    ░██ ░███        ░████████         ░██  ░██    ░██ ░██   ░██ \n" +
+               addTabs()+ "        ░██ ░██    ░██ ░██    ░██ ░█████████ ░██         ░██     ░██  ░███████  ░██    ░██ ░███████  \n" +
+               addTabs()+ " ░██   ░██  ░██   ░███ ░███   ░██ ░██        ░██         ░██     ░██ ░██   ░██  ░██    ░██ ░██   ░██ \n" +
+               addTabs()+ "  ░██████    ░█████░██ ░██░█████   ░███████  ░██         ░█████████   ░█████░██ ░██    ░██ ░██    ░██\n" +
+               addTabs()+ "                       ░██                                                                           \n" +
+               addTabs()+ "                       ░██                                                                           \n" +
+               addTabs()+ "                                                                                                     ");
         displayTitle("MAIN MENU");
         String[] mainMenuOptions = {"Add Deposit", "Make Payment", "Ledger", "Exit"};
         showMenuOptions(mainMenuOptions);
 
+    }
+
+    public String addTabs(){
+        return "\t\t\t\t\t";
     }
 
 //    public void displayProductDetails(){
@@ -37,12 +53,12 @@ public class LedgerUI {
 //    }
 
     public void promptUser(String prompt){
-        System.out.print("Enter " + prompt + ":");
+        System.out.print(addTabs() + "Enter " + prompt + ":");
 
     }
 
     public void displayProduct(Transaction transaction){
-        System.out.println("\t" +"* "+ resetTextColor + transaction + blueTextColor);
+        System.out.println(addTabs() + "\t" +"* "+ resetTextColor + transaction + blueTextColor);
     }
 
     public void displayProductsInArray(ArrayList<Transaction> transactions){
@@ -52,39 +68,42 @@ public class LedgerUI {
     }
 
     public void confirmTransaction(){
-        System.out.println("Are you sure you want to submit this transaction? " +
-                "\n1.Yes\t\t\t\t2.No");
+        System.out.println(addTabs() + "Are you sure you want to submit this transaction? " +
+              "\n"+ addTabs() + "1.Yes\t\t\t\t2.No");
     }
     public void showMenuOptions(String[] options){
-        System.out.println(blueTextColor+"Select an option:");
+        System.out.println(addTabs() + blueTextColor+"Select an option:");
         int menuCount = 1;
         for (String option: options){
-            System.out.println("\t"+menuCount+ ". " + option);
+            System.out.println(addTabs() + addTabs()+"\t"+menuCount+ ". " + option);
             menuCount++;
         }
         displayDivider(50);
-        System.out.print("Enter command: ");
+        System.out.print(addTabs() + "Enter command: ");
     }
     public void displayInputError(){
-        System.out.println("Please try again and enter one of the options provided");
+        System.out.println(addTabs() + "Please try again and enter one of the options provided");
+    }
+    public void displayAmountInputError(){
+        System.out.println(addTabs() + "the input should be a decimal value representing deposits or payments.");
     }
 
     //helper methods to display decorative components
     public void displayTitle(String title){
-        String titleDisplay = "\n";
-        int numberString = 50 - title.length();
+        String titleDisplay = "\n" + addTabs();
+        int numberString = 100 - title.length();
         for(int i = 0; i < numberString; i++){
             titleDisplay += "=";
             if(i == (numberString/2)){
                 titleDisplay += title;
             }
-        }System.out.println(titleDisplay + "\n");
+        }System.out.println(boldText + titleDisplay + "\n");
     }
     public void displayDivider(int length){
         String divider ="";
         for (int i = 0; i < length; i++){
             divider += "-";
         }
-        System.out.println(divider);
+        System.out.println(addTabs() + divider);
     }
 }

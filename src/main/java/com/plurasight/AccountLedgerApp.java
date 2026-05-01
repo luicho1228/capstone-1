@@ -1,14 +1,9 @@
 package com.plurasight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Formatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AccountLedgerApp {
@@ -62,8 +57,7 @@ public class AccountLedgerApp {
         //ui.addDepositUiInit();
         ui.displayTitle("ADD DEPOSIT");
         ui.promptUser("deposit amount");
-        double depositAmount = scanner.nextDouble();
-        scanner.nextLine();
+        double depositAmount = getUserInputDouble();
         ui.promptUser("vendor ");
         String vendor = scanner.nextLine();
         ui.promptUser("description");
@@ -80,8 +74,7 @@ public class AccountLedgerApp {
     private static void addPayment(){
         ui.displayTitle("ADD PAYMENT");
         ui.promptUser("payment amount");
-        double depositAmount = scanner.nextDouble();
-        scanner.nextLine();
+        double depositAmount = getUserInputDouble();
         ui.promptUser("vendor ");
         String vendor = scanner.nextLine();
         ui.promptUser("description");
@@ -101,7 +94,6 @@ public class AccountLedgerApp {
         boolean isShowingList = true;
         displayTransactionList(ledger.getLedgerArrayList());
         do {
-
             intUserInput = getIntUserInput();
             if (intUserInput == 1) {
                 //show all
@@ -109,7 +101,6 @@ public class AccountLedgerApp {
             } else if (intUserInput == 2) {
                 //show deposits
                 displayTransactionList(ledger.getDepositsArrayList());
-
             } else if (intUserInput == 3) {
                 //show payments
                 displayTransactionList(ledger.getPaymentArrayList());
@@ -124,8 +115,6 @@ public class AccountLedgerApp {
                 ui.displayInputError();
             }
         }while (isShowingList);
-
-
     }
 
     public static void showReports(){
@@ -187,14 +176,7 @@ public class AccountLedgerApp {
         double amount = scanner.nextDouble();
         customList = ledger.getAmountList(amount, customList);
         ui.displayProductsInArray(customList);
-        //ledger.getTransactionsByCustomSearch(startDate,endDate,description,vendor,amount);
     }
-    public static void showStartDateReport(){
-        ui.promptUser("start date(yyyy-mm-dd)");
-        String userInputString = scanner.nextLine();
-
-    }
-
     public static void displayTransactionList(ArrayList<Transaction> transactions){
         ui.displayTitle("LEDGER");
         ui.displayProductsInArray(transactions);
@@ -209,9 +191,34 @@ public class AccountLedgerApp {
         System.out.println("Enter command: ");
     }
 
+    public static double getUserInputDouble(){
+        boolean isValid = false;
+        double doubleUserInput = 0.0;
+        while(!(isValid)) {
+            try {
+                doubleUserInput = scanner.nextDouble();
+                scanner.nextLine();
+                isValid=true;
+            } catch (InputMismatchException ime) {
+                ui.displayAmountInputError();
+                scanner.nextLine();
+            }
+        }
+        return doubleUserInput;
+    }
+
     public static int getIntUserInput(){
-        int intUserInput = scanner.nextInt();
-        scanner.nextLine();
+        boolean isValid = false;
+        while(!(isValid)) {
+            try {
+                intUserInput = scanner.nextInt();
+                scanner.nextLine();
+                isValid=true;
+            } catch (InputMismatchException ime) {
+                ui.displayInputError();
+                scanner.nextLine();
+            }
+        }
         return intUserInput;
     }
 }

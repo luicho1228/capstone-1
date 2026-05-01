@@ -1,10 +1,8 @@
 package com.plurasight;
 
 import java.io.*;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -143,24 +141,6 @@ public class Ledger {
         return preMonthList;
     }
 
-    public ArrayList<Transaction>getTransactionsByCustomSearch(String startDate, String endDate, String description, String vendor, double amount){
-        ArrayList<Transaction>customTransactionList = ledgerArrayList;
-        ArrayList<Transaction>tempList = new ArrayList<>();
-        LocalDate startDateTemp = LocalDate.parse(startDate);
-        LocalDate endDateTemp = LocalDate.parse(endDate);
-
-        for (Transaction transaction: customTransactionList){
-            if (transaction.getDate().isAfter(startDateTemp) || transaction.getDate().equals(startDateTemp)) {
-                //customTransactionList.add(transaction);
-                tempList.add(transaction);
-            }
-            if (transaction.getDate().isBefore(endDateTemp) || transaction.getDate().equals(endDateTemp)){
-            }
-        }
-        return customTransactionList;
-    }
-
-
     public ArrayList<Transaction>getStartDateList(String date, ArrayList<Transaction>customList){
         ArrayList<Transaction> tempCustomList = new ArrayList<>();
         formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -215,15 +195,6 @@ public class Ledger {
         return tempCustomList;
     }
 
-    public ArrayList<Transaction> searchListByVendor(String vendor){
-        ArrayList<Transaction> vendorArrayList = new ArrayList<>();
-        for (Transaction transaction: ledgerArrayList){
-            if (vendor.equalsIgnoreCase(transaction.getVendor())){
-                vendorArrayList.add(transaction);
-            }
-        }
-        return vendorArrayList;
-    }
 
     private void sortLedger(){
         ledgerArrayList.sort(Comparator.comparing(Transaction::getDate));
@@ -241,16 +212,6 @@ public class Ledger {
         vendorTransactionHashMap.put(newTransaction.getVendor(), newTransaction);
         amountTransactionHashMap.put(newTransaction.getAmount(), newTransaction);
         sortLedger();
-    }
-
-    public Transaction getTransactionByDate(LocalDate date){
-        return dateTransactionHashMap.get(date);
-    }
-    public Transaction getTransactionByTime(LocalTime time){
-        return timeTransactionHashMap.get(time);
-    }
-    public Transaction getTransactionByAmount(double amount){
-        return amountTransactionHashMap.get(amount);
     }
 
     public void loadLedger(String filePath){
